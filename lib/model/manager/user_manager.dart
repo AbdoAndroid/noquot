@@ -3,7 +3,7 @@ import 'package:noquot/model/entity/user.dart';
 import 'package:sqflite/sqflite.dart';
 
 /// inserts a new user to the users set
-Future<void> insertUser(User user) async {
+Future<int> insertUser(User user) async {
   // Get a reference to the database.
   final db = await MainDBSettings.DB_MAIN;
   // Insert the User into the correct table. You might also specify the
@@ -15,6 +15,15 @@ Future<void> insertUser(User user) async {
     user.toMap(),
     conflictAlgorithm: ConflictAlgorithm.replace,
   );
+  return await getLastUserID();
+}
+
+Future<int> getLastUserID() async {
+  // Get a reference to the database.
+  final Database db = await MainDBSettings.DB_MAIN;
+  final List<Map<String, dynamic>> maps = await db
+      .rawQuery("SELECT MAX(id) as id FROM ${MainDBSettings.TABLE_USER}");
+  return maps[0]['id'];
 }
 
 // A method that retrieves all the users from the dogs table.

@@ -23,7 +23,7 @@ class MainDBSettings {
         );
         db.execute(
           'CREATE TABLE $TABLE_PAYMENT(id INTEGER PRIMARY KEY IDENTITY(1,1),userID int, amount INTEGER,'
-          ' occasion TEXT, day DATE,notes TEXT,FOREIGN KEY(userID) REFERENCES $TABLE_USER(id))',
+          'prevAmount INTEGER,occasion TEXT, day DATE,notes TEXT, FOREIGN KEY(userID) REFERENCES $TABLE_USER(id))',
         );
       },
       // Set the version. This executes the onCreate function and provides a
